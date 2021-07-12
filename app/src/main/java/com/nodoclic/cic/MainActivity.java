@@ -2,7 +2,11 @@ package com.nodoclic.cic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Patterns;
 import android.view.View;
 import android.os.Bundle;
@@ -12,6 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.nodoclic.cic.clases.RsLogin;
+import com.nodoclic.cic.servicios.Servicio;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,12 +30,13 @@ public class MainActivity extends AppCompatActivity {
     TextView register;
     boolean isEmailValid, isPasswordValid;
     TextInputLayout emailError, passError;
+    static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        context = getApplicationContext();
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
@@ -36,7 +47,28 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SetValidation();
+
+
+                try {
+                    Toast.makeText(context, "inicio 1", Toast.LENGTH_SHORT).show();
+
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "runable", Toast.LENGTH_SHORT).show();
+                            RsLogin rsLogin = Servicio._login(context);
+                        }
+                    });
+                    
+                } catch (Exception e) {
+                    System.err.println("tasks interrupted");
+                    Toast.makeText(getApplicationContext(), "1:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                } finally {
+                }
+                Toast.makeText(getApplicationContext(), "fin clic boton", Toast.LENGTH_SHORT).show();
+                //SetValidation();
+
             }
         });
 
@@ -44,10 +76,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // redirect to RegisterActivity
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                //startActivity(intent);
+
+
             }
         });
+    }
+
+
+    static class Task implements Runnable {
+        public void run() {
+            Toast.makeText(context, "runable", Toast.LENGTH_SHORT).show();
+            RsLogin rsLogin = Servicio._login(context);
+        }
     }
 
     public void SetValidation() {
