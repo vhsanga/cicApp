@@ -13,7 +13,7 @@
     <string name="email_error">Please enter your email address</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="password_error">Please enter a password</string>
-    <string name="error_invalid_password">Please enter a minimum password of 6 characters</string>
+    <string name="error_invalid_password">Please enter a minimum password of 2 characters</string>
     <string name="title_activity_home">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

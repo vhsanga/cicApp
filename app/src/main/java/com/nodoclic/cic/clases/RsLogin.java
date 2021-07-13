@@ -82,4 +82,21 @@ public class RsLogin extends mensaje {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    @Override
+    public String toString() {
+        return "RsLogin{" +
+                "id=" + id +
+                ", idCliente=" + idCliente +
+                ", usuario='" + usuario + '\'' +
+                ", estado=" + estado +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", correo='" + correo + '\'' +
+                ", type='" + getType() + '\'' +
+                ", descripcion='" + getDescripcion() + '\'' +
+                '}';
+    }
 }
